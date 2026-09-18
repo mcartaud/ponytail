@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "name": "ponytail",
+      "description": "Lazy senior dev ruleset + commands: forces simplest/shortest working code (YAGNI ladder), plus review/audit/debt/gain/help skills for catching over-engineering.",
+      "source": "."
+    }
+  ]
+}

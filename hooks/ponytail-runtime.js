@@ -27,6 +27,7 @@ const isQoder = !isCopilot && !isCodex && Boolean(process.env.QODER_SESSION_ID);
 // hooks next to CLAUDE_PLUGIN_ROOT, and it needs Cursor-shaped JSON either
 // way, so this check comes after the hosts with their own data dirs.
 const isCursor = !isCopilot && !isCodex && !isQoder && Boolean(process.env.CURSOR_VERSION);
+const isECA = Boolean(process.env.ECA_AGENT);
 
 let stateDir = getClaudeDir();
 if (isCodex) stateDir = process.env.PLUGIN_DATA;
@@ -35,6 +36,7 @@ if (isCodex) stateDir = process.env.PLUGIN_DATA;
 if (isCopilot) stateDir = process.env.COPILOT_PLUGIN_DATA || getClaudeDir();
 if (isQoder) stateDir = path.join(os.homedir(), '.qoder');
 if (isCursor) stateDir = path.join(os.homedir(), '.cursor');
+if (isECA) stateDir = path.join(os.homedir(), '.config', 'eca');
 
 const statePath = path.join(stateDir, STATE_FILE);
 
@@ -120,6 +122,10 @@ function writeHookOutput(event, mode, context = '') {
     process.stdout.write(JSON.stringify(output));
     return;
   }
+  if (isECA) {
+    process.stdout.write(JSON.stringify(context ? { additionalContext: context } : {}));
+    return;
+  }
   // Native Claude: SessionStart accepts raw stdout, but SubagentStart needs the
   // hookSpecificOutput JSON form or the context is dropped.
   if (event === 'SubagentStart') {
@@ -137,6 +143,7 @@ module.exports = {
   isCodex,
   isCopilot,
   isCursor,
+  isECA,
   isQoder,
   readMode,
   setMode,

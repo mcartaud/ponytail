@@ -1,0 +1,20 @@
+{
+  "ponytail-activate": {
+    "type": "chatStart",
+    "visible": false,
+    "description": "ponytail: inject ruleset into new/resumed chat",
+    "actions": [{ "type": "shell", "shell": "node \"${plugin:root}/hooks/ponytail-activate.js\"" }]
+  },
+  "ponytail-subagent": {
+    "type": "subagentStart",
+    "visible": false,
+    "description": "ponytail: inject ruleset into subagent",
+    "actions": [{ "type": "shell", "shell": "node \"${plugin:root}/hooks/ponytail-activate.js\"" }]
+  },
+  "ponytail-mode-tracker": {
+    "type": "preRequest",
+    "visible": false,
+    "description": "ponytail: detect /ponytail lite|full|ultra|off",
+    "actions": [{ "type": "shell", "shell": "node \"${plugin:root}/hooks/ponytail-mode-tracker.js\"" }]
+  }
+}
